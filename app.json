@@ -1,0 +1,11 @@
+{
+    "name": "Slack Giveaway Bot",
+    "description": "Start a fun and engaging giveaway within your Slack workspace",
+    "repository": "https://github.com/tfich/slack-giveaway",
+    "keywords": ["slack", "bots"],
+    "env": {
+        "SLACK_TOKEN": {
+            "description": "Slack bot token (scope: bot) - should start with 'xoxb-'"
+        }
+    }
+}

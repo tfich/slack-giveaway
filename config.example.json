@@ -1,0 +1,6 @@
+{
+    "port": 8080,
+    "slack": {
+        "token": "xoxb-"
+    }
+}
