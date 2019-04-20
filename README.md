@@ -11,7 +11,7 @@ npm install
 npm start
 ```
 
-User `npm test` to test locally. The program will auto-generate a ngrok publically accessible url 
+Use `npm test` to test locally. The program will auto-generate a ngrok publically accessible url 
 if you wish to use it while testing.
 
 ## Set Up
