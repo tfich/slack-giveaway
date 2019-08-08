@@ -79,7 +79,7 @@ export class CommandHandler {
             winners = 'No participants  '
         } else {
             for (let i = 0; i < numWinners; i++) {
-                let winnerNum: number = Math.floor(Math.random() * reactions.length)
+                const winnerNum: number = Math.floor(Math.random() * reactions.length)
                 if (reactions[winnerNum] !== undefined) {
                     winners += `<@${reactions[winnerNum]}>, `
                     reactions.splice(winnerNum, 1)
