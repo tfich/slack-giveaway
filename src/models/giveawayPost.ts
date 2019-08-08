@@ -1,10 +1,10 @@
 import { MessageAttachment } from '@slack/web-api'
-import { GiveawaySelections } from '../types/dialogrestypes'
+import { IGiveawaySelections } from '../types/dialogrestypes'
 
 export function giveawayInitPost(
-    selections: GiveawaySelections
+    selections: IGiveawaySelections
     ): MessageAttachment[] {
-    let post = {
+    const post = {
         fallback: `New Giveaway - ${selections.prize}`,
         title: selections.prize,
         color: '#000000',
@@ -31,7 +31,7 @@ export function giveawayInitPost(
 }
 
 export function giveawayWinnersPost(
-    selections: GiveawaySelections,
+    selections: IGiveawaySelections,
     winners: string): MessageAttachment[] {
     return [{
         fallback: `Giveaway Complete - ${selections.prize}`,

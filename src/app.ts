@@ -2,6 +2,7 @@ import express from 'express'
 import argv from 'yargs'
 import fs from 'fs'
 import bodyParser from 'body-parser'
+import signale from 'signale'
 
 import { checkSlackRequest } from './utils/slackMiddleware'
 import { connectNgrok } from './utils/connectNgrok'
@@ -29,32 +30,30 @@ function start(config: any) {
     app.post('/slack/interactivity', (req, res) => {
         const payload = JSON.parse(req.body.payload)
 
-        if (payload.type === 'dialog_submission') {
-            if (payload.callback_id === 'giveawayDialog') {
-                commandHandler.startGiveaway(payload)
-            }
+        if (payload.type === 'dialog_submission' && payload.callback_id === 'giveawayDialog') {
+            commandHandler.startGiveaway(payload)
         }
 
         res.status(200).end()
     })
 
     app.listen(port, () => {
-        console.log(`[Success] App successfully running on ${port}.`)
+        signale.start(`[Success] App successfully running on ${port}.`)
         // starts a local Ngrok server which you can connect to Slack
-        if (isTestMode) connectNgrok(port)
+        if (isTestMode) { connectNgrok(port) }
     })
 }
 
 fs.readFile('./config.json', (err, data) => {
     if (err) {
-        console.log('[Error] Could not find config.json.');
-        process.exit(1);
+        signale.error('[Error] Could not find config.json.')
+        process.exit(1)
     }
     try {
-        let config = JSON.parse(data.toString())
+        const config = JSON.parse(data.toString())
         start(config)
     } catch(e) {
-        console.log('[Error] Trouble parsing config.json file. Please double check your file and try again.')
+        signale.error('[Error] Trouble parsing config.json file. Please double check your file and try again.')
         process.exit(1)
     }
 })

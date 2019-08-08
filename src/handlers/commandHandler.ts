@@ -1,28 +1,28 @@
 import { WebClient } from '@slack/web-api'
+import signale from 'signale'
 
 import {sleep } from '../utils/sleep'
 import { giveawayDialog } from '../models/giveawayDialog'
-import { GiveawayDialogSubmission } from '../types/dialogrestypes'
+import { IGiveawayDialogSubmission } from '../types/dialogrestypes'
 import { giveawayInitPost, giveawayWinnersPost } from '../models/giveawayPost'
-import { ChatPostMessageResult, ReactionGetResult } from '../types/slackresulttypes'
+import { IChatPostMessageResult, IReactionGetResult } from '../types/slackresulttypes'
 
 export class CommandHandler {
-    client: WebClient
+    private client: WebClient
 
     constructor(token: string) {
         this.client = new WebClient(token)
     }
 
-    async openGiveawayDialog(trigger: string): Promise<any> {
+    public async openGiveawayDialog(trigger: string): Promise<any> {
         const res = await this.client.dialog.open({
             dialog: giveawayDialog,
             trigger_id: trigger
         })
-        if (res.error)
-            console.log('[Error] Error opening giveaway dialog.')
+        if (res.error) { signale.error('[Error] Error opening giveaway dialog.') }
     }
 
-    async startGiveaway(payload: GiveawayDialogSubmission): Promise<void> {
+    public async startGiveaway(payload: IGiveawayDialogSubmission): Promise<void> {
         const submission = payload.submission
 
         // type check fields
@@ -44,7 +44,7 @@ export class CommandHandler {
             channel: submission.channel,
             text: '',
             attachments: giveawayInitPost(submission)
-        }) as ChatPostMessageResult)
+        }) as IChatPostMessageResult)
 
         // Save the post's timestamp in order to grab reactions later
         const postTs = postReaction.ts
@@ -63,7 +63,7 @@ export class CommandHandler {
             name: 'tada',
             channel: submission.channel,
             timestamp: postTs
-        }) as ReactionGetResult)
+        }) as IReactionGetResult)
 
         const reactions: string[] = getReactions.message.reactions[0].users.length > 1 ?
             getReactions.message.reactions[0].users : []
@@ -72,7 +72,7 @@ export class CommandHandler {
         reactions.shift()
 
         // select winners
-        const numWinners: Number = Number(submission.numWinners)
+        const numWinners: number = Number(submission.numWinners)
         let winners: string = ''
 
         if (reactions.length === 0) {

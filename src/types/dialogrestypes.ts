@@ -1,27 +1,27 @@
-export interface GiveawayDialogSubmission {
+export interface IGiveawayDialogSubmission {
     type: string
     token: string
     action_ts: string
-    team: SlackTeam
-    user: SlackUser
-    channel: SlackChannel
-    submission: GiveawaySelections
+    team: ISlackTeam
+    user: ISlackUser
+    channel: ISlackChannel
+    submission: IGiveawaySelections
     callback_id: string
     response_url: string
     state: string
 }
 
-export interface SlackChannel {
+export interface ISlackChannel {
     id: string
     name: string
 }
 
-export interface SlackUser {
+export interface ISlackUser {
     id: string
     name: string
 }
 
-export interface GiveawaySelections {
+export interface IGiveawaySelections {
     channel: string
     prize: string
     duration: string
@@ -29,7 +29,7 @@ export interface GiveawaySelections {
     info: string
 }
 
-export interface SlackTeam {
+export interface ISlackTeam {
     id: string
     domain: string
 }

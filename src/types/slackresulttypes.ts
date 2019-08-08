@@ -1,6 +1,6 @@
 import { WebAPICallResult } from '@slack/web-api'
 
-export interface ChatPostMessageResult extends WebAPICallResult {
+export interface IChatPostMessageResult extends WebAPICallResult {
     channel: string
     ts: string
     message: {
@@ -8,43 +8,43 @@ export interface ChatPostMessageResult extends WebAPICallResult {
     }
 }
 
-export interface ReactionGetResult extends WebAPICallResult {
+export interface IReactionGetResult extends WebAPICallResult {
     ok: boolean
     type: string
     channel: string
-    message: ReactionGetMessage
+    message: IReactionGetMessage
     response_metadata: {
         scopes: string[]
         acceptedScopes: string[]
     }
 }
 
-interface ReactionGetMessage {
+interface IReactionGetMessage {
     type: string
     subtype: string
     text: string
     ts: string
     username: string
     bot_id: string
-    attachments: ReactionGetAttachment[]
+    attachments: IReactionGetAttachment[]
     permalink: string
-    reactions: {
+    reactions: Array<{
         name: string
         users: string[]
         count: number
-    }[]
+    }>
 }
 
-interface ReactionGetAttachment {
+interface IReactionGetAttachment {
     author_name: string
     fallback: string
     title: string
     footer: string
     id: number
     color: string
-    fields: {
+    fields: Array<{
         title: string
         value: string
         short: boolean
-    }[]
+    }>
 }
